@@ -31,3 +31,28 @@ body{
     background-color: #aaa;
     border-radius: 1vmin;
 }
+
+.tile{
+ 
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border-radius: 1vmin;
+    top: calc(var(--y) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap));
+    left: calc(var(--x) * (var(--cell-size) + var(--cell-gap)) + var(--cell-gap) );
+    font-weight: bold;
+    background-color: hsl(200, 50%, var(--background-lightness) );
+    color: hsl(200, 25%, var(--text-lightness) );
+    animation: show 200ms ease-in-out;
+    transition: 100ms ease-in-out;
+}
+
+@keyframes show{
+    0%{
+        opacity: .5;
+        transform: scale(0);
+    }
+}
