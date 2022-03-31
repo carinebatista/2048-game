@@ -16,10 +16,14 @@ export default class Grid{
 }
 
 class Cell {
+    #cellElement
+    #x
+    #y
+
     constructor(cellElement, x, y){
-        this.cellElement = this.cellElement
-        this.x = x
-        this.y = y 
+        this.#cellElement = this.cellElement
+        this.#x = x
+        this.#y = y 
 
     }
 }
