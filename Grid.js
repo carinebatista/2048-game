@@ -14,6 +14,10 @@ export default class Grid{
         })
     }
 
+    get cells(){
+        return this.#cells
+    }
+
     get cellsByRow(){
         return this.#cells.reduce((cellGrid, cell) => {
             cellGrid[cell.y] = cellGrid[cell.y] || []
@@ -81,7 +85,7 @@ class Cell {
     }
 
     set mergeTile(value){
-        this.mergeTile = value
+        this.#mergeTile = value
         if(value == null) return
         this.mergeTile.x = this.#x
         this.mergeTile.y = this.#y
