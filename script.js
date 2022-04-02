@@ -12,15 +12,17 @@ const grid = new Grid(gameBoard)
 	 window.addEventListener("keydown", handleInput, {once: true})
  }
 
- function handleInput(e){
+ async function handleInput(e){
 	switch(e.key){
 		case "ArrowUp":
 			moveUp()
 			break
 		case "ArrowDown":
-			moveDown()
+			await moveDown()
+			break
 		case "ArrowLeft":
-			moveLeft()
+			await moveLeft()
+			break
 		case "ArrowRight":
 			moveRight()
 			break
@@ -30,6 +32,9 @@ const grid = new Grid(gameBoard)
 	}
 
 	grid.cells.forEach(cell => cell.mergeTiles())
+
+	const newTile = new Tile(gameBoard)
+	grid.randomEmptyCell().tile = newTile
 
 	setupInput()
 
@@ -52,7 +57,9 @@ const grid = new Grid(gameBoard)
  }
 
  function slideTiles(cells){
-	 cells.forEach(group => {
+	 return Promise.all(
+	 cells.flatMap(group => {
+		 const promises = []
 		 for (let i = 1; i < group.length; i++){
 			 const cell = group[i]
 			 if(cell.tile == null) continue
@@ -64,6 +71,7 @@ const grid = new Grid(gameBoard)
 			 }
 
 			 if(lastValidCell != null){
+				 promises.push(cell.tile.waitForTransition())
 				if(lastValidCell.tile != null){
 				  lastValidCell.mergeTile = cell.tile
 			 	}	else{
@@ -72,5 +80,6 @@ const grid = new Grid(gameBoard)
 				cell.tile = null
 			 }
 		 }
-	 })
+		 return promises
+	 }))
  }
