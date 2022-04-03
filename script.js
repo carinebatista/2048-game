@@ -52,7 +52,13 @@ const grid = new Grid(gameBoard)
 	const newTile = new Tile(gameBoard)
 	grid.randomEmptyCell().tile = newTile
 
-	setupInput()
+	if(!canMoveUp() && !canMoveDown() && !canMoveLeft() && !canMoveRight()){
+		newTile.waitForTransition(true).then(() => {
+			alert("You Lose :(")
+		})
+		return
+	}
+	 setupInput()
 
  }
 
